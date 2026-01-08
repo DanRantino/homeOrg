@@ -1,0 +1,45 @@
+<svg
+  width="256"
+  height="256"
+  viewBox="0 0 256 256"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Background -->
+  <rect width="256" height="256" rx="48" fill="#0F172A"/>
+
+  <!-- House -->
+  <path
+    d="M64 132L128 80L192 132V192C192 200.837 184.837 208 176 208H80C71.163 208 64 200.837 64 192V132Z"
+    fill="#E5E7EB"
+  />
+
+  <!-- Roof -->
+  <path
+    d="M48 136L128 64L208 136"
+    fill="none"
+    stroke="#38BDF8"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Gear circle -->
+  <circle
+    cx="128"
+    cy="156"
+    r="26"
+    fill="#0F172A"
+    stroke="#38BDF8"
+    stroke-width="6"
+  />
+
+  <!-- Check mark -->
+  <path
+    d="M118 156L126 164L140 148"
+    fill="none"
+    stroke="#38BDF8"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
