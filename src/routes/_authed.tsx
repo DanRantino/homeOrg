@@ -1,8 +1,9 @@
+import Header from "@/components/Header";
 import client from "@/data/client";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authed")({
-  beforeLoad: async ({ location }) => {
+  beforeLoad: ({ location }) => {
     const user = client.authStore.record;
     if (!user) {
       throw redirect({
@@ -12,4 +13,14 @@ export const Route = createFileRoute("/_authed")({
     }
     return { user };
   },
+  component: RouteComponent,
 });
+
+function RouteComponent({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <Header />
+      {children}
+    </div>
+  );
+}

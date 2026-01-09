@@ -40,20 +40,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <ThemeProvider defaultTheme="dark" storageKey="dark-theme">
         <body>
-          <Header />
-          {children}
-          <TanStackDevtools
-            config={{
-              position: "bottom-right",
-            }}
-            plugins={[
-              {
-                name: "Tanstack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
-          <Scripts />
+          <div className="w-screen h-screen flex justify-center items-center">
+            {children}
+            <TanStackDevtools
+              config={{
+                position: "bottom-right",
+              }}
+              plugins={[
+                {
+                  name: "Tanstack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+              ]}
+            />
+            <Scripts />
+          </div>
         </body>
       </ThemeProvider>
     </html>

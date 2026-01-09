@@ -1,15 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-import {
-  Zap,
-  Server,
-  Route as RouteIcon,
-  Shield,
-  Waves,
-  Sparkles,
-} from "lucide-react";
+import client from "@/data/client";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({ component: App });
-
-function App() {
-  return <div>Test</div>;
-}
+export const Route = createFileRoute("/")({
+  beforeLoad() {
+    throw redirect({
+      to: client.authStore.record ? "/dashboard" : "/login",
+    });
+  },
+  onEnter: () => {
+    redirect({
+      to: client.authStore.record ? "/dashboard" : "/login",
+    });
+  },
+});
