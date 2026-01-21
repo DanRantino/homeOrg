@@ -7,9 +7,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const Route = createFileRoute("/_authed")({
   beforeLoad: () => {
-    // ⛔ NÃO bloqueia no server
     if (isServer) return;
 
+    console.log("🚀 ~ auth:", auth.isAuthenticated())
     if (!auth.isAuthenticated()) {
       throw redirect({ to: "/sign-in" });
     }

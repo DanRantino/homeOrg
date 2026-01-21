@@ -15,6 +15,8 @@ import { useForm } from "@tanstack/react-form";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import { errorToast, successToast } from "@/components/toast";
+import Client from "pocketbase";
+import { pb } from "@/data/pocketbase";
 
 export const Route = createFileRoute("/sign-in")({
   component: RouteComponent,
@@ -46,6 +48,7 @@ function RouteComponent() {
     },
     onSubmit: async ({ value }) => {
       try {
+        await pb.collection("users").authWithPassword(value.email, value.password)
         successToast({
           title: "Sucesso",
           description: "Login realizado com sucesso",
