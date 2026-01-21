@@ -40,10 +40,8 @@ Além disso, o projeto serve como laboratório prático para aplicar boas práti
 - Tailwind CSS
 
 ### Back-end
-- Node.js
-- API REST
-- Prisma ORM
-- PostgreSQL
+- Pocketbase
+- NestJs (será feito após a conclusão do front-end)
 
 ### Outros
 - Autenticação e controle de acesso
