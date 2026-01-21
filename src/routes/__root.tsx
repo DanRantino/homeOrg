@@ -2,12 +2,16 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
-import Header from "../components/Header";
-
 import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/context/auth.context";
+import { bootstrapSession } from "@/lib/session";
 
 export const Route = createRootRoute({
+  beforeLoad: async () => {
+    await bootstrapSession();
+  },
   head: () => ({
     meta: [
       {
@@ -38,14 +42,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <ThemeProvider defaultTheme="dark" storageKey="dark-theme">
-        <body>
-          <div className="w-screen h-screen flex justify-center items-center">
+      <body>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            storageKey="dark-theme"
+            enableSystem
+          >
             {children}
+
             <TanStackDevtools
-              config={{
-                position: "bottom-right",
-              }}
+              config={{ position: "bottom-left" }}
               plugins={[
                 {
                   name: "Tanstack Router",
@@ -53,10 +61,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 },
               ]}
             />
+
+            <Toaster position="bottom-right" />
             <Scripts />
-          </div>
-        </body>
-      </ThemeProvider>
+          </ThemeProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

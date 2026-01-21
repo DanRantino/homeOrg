@@ -1,15 +1,15 @@
-import client from "@/data/client";
+import { pb } from "@/data/pocketbase";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   beforeLoad() {
     throw redirect({
-      to: client.authStore.record ? "/dashboard" : "/login",
+      to: pb.authStore.record ? "/dashboard" : "/sign-in",
     });
   },
   onEnter: () => {
     redirect({
-      to: client.authStore.record ? "/dashboard" : "/login",
+      to: pb.authStore.record ? "/dashboard" : "/sign-in",
     });
   },
 });

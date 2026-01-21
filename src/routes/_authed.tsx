@@ -1,26 +1,34 @@
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Header from "@/components/Header";
-import client from "@/data/client";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { auth } from "@/lib/auth";
+import { isServer } from "@/lib/env";
+import Sidebar from "@/components/Sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const Route = createFileRoute("/_authed")({
-  beforeLoad: ({ location }) => {
-    const user = client.authStore.record;
-    if (!user) {
-      throw redirect({
-        to: "/login",
-        search: { redirect: location.href },
-      });
+  beforeLoad: () => {
+    // ⛔ NÃO bloqueia no server
+    if (isServer) return;
+
+    if (!auth.isAuthenticated()) {
+      throw redirect({ to: "/sign-in" });
     }
-    return { user };
   },
   component: RouteComponent,
 });
 
-function RouteComponent({ children }: { children: React.ReactNode }) {
+function RouteComponent() {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="h-screen w-screen">
       <Header />
-      {children}
+      <div className="flex bg-accent h-[calc(100vh-64px)]">
+        <SidebarProvider>
+          <Sidebar />
+          <div className="p-6 w-[calc(100vw-280px)]">
+            <Outlet />
+          </div>
+        </SidebarProvider>
+      </div>
     </div>
   );
 }

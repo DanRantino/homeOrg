@@ -9,20 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedTasksRouteImport } from './routes/_authed/tasks'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedRoute = AuthedRouteImport.update({
@@ -34,6 +35,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedTasksRoute = AuthedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -42,59 +48,63 @@ const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/sign-in': typeof SignInRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/tasks': typeof AuthedTasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/sign-in': typeof SignInRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/tasks': typeof AuthedTasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
-  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/sign-in': typeof SignInRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/tasks': typeof AuthedTasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/dashboard'
+  fullPaths: '/' | '/register' | '/sign-in' | '/dashboard' | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/dashboard'
+  to: '/' | '/register' | '/sign-in' | '/dashboard' | '/tasks'
   id:
     | '__root__'
     | '/'
     | '/_authed'
-    | '/login'
     | '/register'
+    | '/sign-in'
     | '/_authed/dashboard'
+    | '/_authed/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
-  LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  SignInRoute: typeof SignInRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed': {
@@ -111,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/tasks': {
+      id: '/_authed/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthedTasksRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/dashboard': {
       id: '/_authed/dashboard'
       path: '/dashboard'
@@ -123,10 +140,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedTasksRoute: typeof AuthedTasksRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedTasksRoute: AuthedTasksRoute,
 }
 
 const AuthedRouteWithChildren =
@@ -135,8 +154,8 @@ const AuthedRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
-  LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  SignInRoute: SignInRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
