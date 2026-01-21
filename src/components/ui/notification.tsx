@@ -69,7 +69,6 @@ const Notification: React.FC<NotificationProps> = ({ notifications }) => {
           <DropdownMenuLabel className="px-4 py-2 font-medium">
             Notifications
           </DropdownMenuLabel>
-          {/* Here you can add notification items */}
           {notifications.map((notification, index) => {
             if (index >= 5) return null; // Limit to 5 notifications
             return (

@@ -73,11 +73,11 @@ export const notificationsMock: NotificationType[] = [
 export default function Header() {
   return (
     <>
-      <header className="p-4 h-20 items-center bg-card text-black shadow-lg sticky top-0 z-50 flex justify-between">
+      <header className="p-4 h-16 items-center bg-card text-black shadow-lg sticky top-0 z-50 flex justify-between">
         <div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 h-8">
             <Select>
-              <SelectTrigger className="w-[180px] pl-2 font-semibold">
+              <SelectTrigger size="sm" className="w-45 h-12 pl-2 font-semibold">
                 <SelectValue placeholder="Home" />
               </SelectTrigger>
               <SelectContent>
@@ -95,7 +95,7 @@ export default function Header() {
           <p className="text-muted-foreground">
             {
               notificationsMock.filter(
-                (notification) => notification.type === "to do"
+                (notification) => notification.type === "to do",
               ).length
             }{" "}
             tarefas pendentes hoje

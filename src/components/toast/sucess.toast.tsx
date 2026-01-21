@@ -1,9 +1,5 @@
 import Toast, { ToastProps } from "../ui/sonner";
-import {
-  Toaster as Sonner,
-  type ToasterProps,
-  toast as sonnerToast,
-} from "sonner";
+import { toast as sonnerToast } from "sonner";
 
 // Custom Toast Functions
 export function successToast(toast: Omit<ToastProps, "id" | "type">) {
