@@ -4,14 +4,14 @@ import { auth } from "@/lib/auth";
 import { isServer } from "@/lib/env";
 import Sidebar from "@/components/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { pb } from "@/data/pocketbase";
 
 export const Route = createFileRoute("/_authed")({
   beforeLoad: () => {
-    if (isServer) return;
+    // if (isServer) return;
 
-    console.log("🚀 ~ auth:", auth.isAuthenticated())
     if (!auth.isAuthenticated()) {
-      throw redirect({ to: "/sign-in" });
+      throw redirect({ to: "/sign-in", reloadDocument: true });
     }
   },
   component: RouteComponent,
