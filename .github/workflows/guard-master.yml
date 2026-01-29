@@ -1,0 +1,16 @@
+name: Guard master
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure PR comes from develop
+        run: |
+          if [ "${{ github.head_ref }}" != "develop" ]; then
+            echo "❌ master só aceita PRs vindos da branch develop"
+            exit 1
+          fi
