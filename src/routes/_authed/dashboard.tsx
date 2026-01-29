@@ -57,7 +57,7 @@ const arrCards: {
 
 function App() {
   return (
-    <PageStructure title="Dashboard" description="Visão geral da casa hoje.">
+    <PageStructure title="Dashboard" description="Visão geral da casa hoje">
       {arrCards.map((opt) => (
         <MetricCards
           key={opt.title}
