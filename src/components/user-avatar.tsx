@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { User } from "lucide-react";
-import { UserType } from "@/types/user";
+import { type UserType } from "@/types/user";
 import { Button } from "./ui/button";
 import { pb } from "@/data/pocketbase";
 import { useNavigate } from "@tanstack/react-router";
@@ -55,12 +55,12 @@ function UserAvatar({ fallback, user }: { fallback?: string; user: UserType }) {
             <Button
               variant="link"
               className="w-full text-left text-destructive hover:bg-muted"
-              onClick={()=>{
-                pb.authStore.clear()
-                navigate({
+              onClick={async () => {
+                pb.authStore.clear();
+                await navigate({
                   to: "/dashboard",
-                  reloadDocument: true
-                })
+                  reloadDocument: true,
+                });
               }}
             >
               Sair

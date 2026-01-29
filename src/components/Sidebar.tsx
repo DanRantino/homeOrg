@@ -14,10 +14,10 @@ import {
   Cog,
   History,
   LayoutDashboardIcon,
-  LucideProps,
+  type LucideProps,
   Users,
 } from "lucide-react";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
+import { type ForwardRefExoticComponent, type RefAttributes } from "react";
 
 type SidebarNavItem = {
   label: string;

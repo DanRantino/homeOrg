@@ -1,10 +1,8 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Header from "@/components/Header";
 import { auth } from "@/lib/auth";
-import { isServer } from "@/lib/env";
 import Sidebar from "@/components/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { pb } from "@/data/pocketbase";
 
 export const Route = createFileRoute("/_authed")({
   beforeLoad: () => {

@@ -11,6 +11,7 @@ import {
   type ToasterProps,
   toast as sonnerToast,
 } from "sonner";
+import React from "react";
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme } = useTheme();

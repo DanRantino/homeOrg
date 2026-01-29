@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
+import React, { useState } from "react";
 
 interface PasswordInputProps extends React.ComponentProps<"input"> {}
 
@@ -38,7 +38,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         </Button>
       </div>
     );
-  }
+  },
 );
 
 PasswordInput.displayName = "PasswordInput";

@@ -3,12 +3,12 @@ import PageStructure from "@/components/PageStructure";
 import {
   createFileRoute,
   linkOptions,
-  LinkProps,
+  type LinkProps,
 } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authed/dashboard")({ component: App });
 
-const arrCards: {
+const arrCards: { 
   amount: number;
   title: string;
   to: LinkProps;

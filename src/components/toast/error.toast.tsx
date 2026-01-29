@@ -1,4 +1,4 @@
-import Toast, { ToastProps } from "../ui/sonner";
+import Toast, { type ToastProps } from "../ui/sonner";
 import { toast as sonnerToast } from "sonner";
 
 export function errorToast(toast: Omit<ToastProps, "id" | "type">) {

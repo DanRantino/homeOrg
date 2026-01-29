@@ -53,7 +53,7 @@ function RouteComponent() {
     },
     onSubmit: async ({ value }) => {
       try {
-        const response = await pb.collection("users").create({
+        await pb.collection("users").create({
           body: {
             email: value.email,
             name: value.name,
@@ -62,7 +62,6 @@ function RouteComponent() {
           },
         });
       } catch (error) {
-        console.log(error);
         errorToast({
           title: "Erro ao registrar",
           description: error instanceof Error ? error.message : String(error),
@@ -84,10 +83,10 @@ function RouteComponent() {
         <CardDescription>Crie sua conta</CardDescription>
       </CardHeader>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           e.stopPropagation();
-          form.handleSubmit();
+          await form.handleSubmit();
         }}
       >
         <CardContent>

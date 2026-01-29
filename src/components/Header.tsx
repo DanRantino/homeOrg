@@ -9,7 +9,7 @@ import {
 import { ModeToggle } from "./mode-toggle";
 import Notification from "./ui/notification";
 
-import { NotificationType } from "@/types/notifications";
+import { type NotificationType } from "@/types/notifications";
 import UserAvatar from "./user-avatar";
 
 export const notificationsMock: NotificationType[] = [

@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
 } from "./dropdown-menu";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import { NotificationType } from "@/types/notifications";
+import { type NotificationType } from "@/types/notifications";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "./drawer";
 
 type NotificationProps = {

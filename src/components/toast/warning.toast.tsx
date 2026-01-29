@@ -1,9 +1,5 @@
-import Toast, { ToastProps } from "../ui/sonner";
-import {
-  Toaster as Sonner,
-  type ToasterProps,
-  toast as sonnerToast,
-} from "sonner";
+import Toast, { type ToastProps } from "../ui/sonner";
+import { toast as sonnerToast } from "sonner";
 
 export function warningToast(toast: Omit<ToastProps, "id" | "type">) {
   return sonnerToast.custom((id) => (

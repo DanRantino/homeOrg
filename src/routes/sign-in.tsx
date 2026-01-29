@@ -52,8 +52,10 @@ function RouteComponent() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await pb.collection("users").authWithPassword(value.email, value.password)
-        await pb.collection("users").requestVerification(value.email)
+        await pb
+          .collection("users")
+          .authWithPassword(value.email, value.password);
+        await pb.collection("users").requestVerification(value.email);
         successToast({
           title: "Sucesso",
           description: "Login realizado com sucesso",
@@ -61,7 +63,7 @@ function RouteComponent() {
         return navigate({
           to: "/dashboard",
         });
-      } catch (e) {
+      } catch {
         errorToast({
           title: "Erro",
           description: "Erro ao realizar o login",
@@ -69,28 +71,24 @@ function RouteComponent() {
       }
     },
   });
-  
+
   const loginWithOTP = async () => {
-    const req = await pb.collection("users").requestOTP(form.getFieldValue("email"))
+    const req = await pb
+      .collection("users")
+      .requestOTP(form.getFieldValue("email"));
     setOtpId(req.otpId);
-  }
+  };
 
   const sendOTPCode = async () => {
-    try {
-      await pb.collection("users").authWithOTP(otpId, otp);
-      successToast({
-        title: "Sucesso",
-        description: "OTP login realizado com sucesso",
-      });
-      return navigate({
-          to: "/dashboard",
-        });
-    }
-    catch (e) {
-
-    }
-    
-  }
+    await pb.collection("users").authWithOTP(otpId, otp);
+    successToast({
+      title: "Sucesso",
+      description: "OTP login realizado com sucesso",
+    });
+    return navigate({
+      to: "/dashboard",
+    });
+  };
 
   return (
     <div className="h-screen flex justify-center items-center flex-1">
@@ -108,65 +106,73 @@ function RouteComponent() {
           }}
         >
           <CardContent>
-             {!isOTP &&
-              <><form.Field
-              name="email"
-              children={(field) => {
-                return (
-                  <InputControl
-                    label="Email"
-                    error={field.state.meta.errors[0]?.message || null}
-                  >
-                    <Input
-                      aria-invalid={!!field.state.meta.errors.length}
-                      id="email"
-                      type="email"
-                      value={field.state.value ?? ""}
-                      onChange={(e) => field.setValue(e.target.value)}
-                    />
-                  </InputControl>
-                );
-              }}
-            />
-            <form.Field
-              name="password"
-              children={(field) => {
-                return (
-                  <InputControl
-                    label="Password"
-                    error={field.state.meta.errors[0]?.message || null}
-                  >
-                    <PasswordInput
-                      aria-invalid={!!field.state.meta.errors.length}
-                      id="password"
-                      type="password"
-                      value={field.state.value ?? ""}
-                      onChange={(e) => field.setValue(e.target.value)}
-                    />
-                  </InputControl>
-                );
-              }}
-            />
-            </>
-          }
-          {
-            isOTP && <InputControl error={""} label="OTP" >
-              <Input type="number" value={otp} onChange={e=>setOtp(e.currentTarget.value)} />
+            {!isOTP && (
+              <>
+                <form.Field
+                  name="email"
+                  children={(field) => {
+                    return (
+                      <InputControl
+                        label="Email"
+                        error={field.state.meta.errors[0]?.message || null}
+                      >
+                        <Input
+                          aria-invalid={!!field.state.meta.errors.length}
+                          id="email"
+                          type="email"
+                          value={field.state.value ?? ""}
+                          onChange={(e) => field.setValue(e.target.value)}
+                        />
+                      </InputControl>
+                    );
+                  }}
+                />
+                <form.Field
+                  name="password"
+                  children={(field) => {
+                    return (
+                      <InputControl
+                        label="Password"
+                        error={field.state.meta.errors[0]?.message || null}
+                      >
+                        <PasswordInput
+                          aria-invalid={!!field.state.meta.errors.length}
+                          id="password"
+                          type="password"
+                          value={field.state.value ?? ""}
+                          onChange={(e) => field.setValue(e.target.value)}
+                        />
+                      </InputControl>
+                    );
+                  }}
+                />
+              </>
+            )}
+            {isOTP && (
+              <InputControl error={""} label="OTP">
+                <Input
+                  type="number"
+                  value={otp}
+                  onChange={(e) => setOtp(e.currentTarget.value)}
+                />
               </InputControl>
-          }
+            )}
           </CardContent>
           <CardFooter>
             <CardAction className="flex gap-2 justify-evenly w-full">
               <Button type="submit" disabled={form.state.isSubmitting}>
                 {form.state.isSubmitting ? "Entrando..." : "Entrar"}
               </Button>
-              <Button type="button" onClick={(e)=>{
+              <Button
+                type="button"
+                onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   setIsOTP(true);
-                  !isOTP && loginWithOTP();
-                  isOTP && sendOTPCode()
-                }}>
+                  !isOTP && (await loginWithOTP());
+                  isOTP && (await sendOTPCode());
+                }}
+              >
                 OTP Login
               </Button>
               <Button variant="link" asChild>
