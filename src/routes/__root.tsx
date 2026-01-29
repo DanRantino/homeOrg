@@ -1,13 +1,21 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import React from "react";
-import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { bootstrapSession } from "@/lib/session";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {
+  HeadContent,
+  Scripts,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import React from "react";
+import appCss from "../styles.css?url";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   beforeLoad: async () => {
     await bootstrapSession();
   },
@@ -56,6 +64,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               {
                 name: "Tanstack Router",
                 render: <TanStackRouterDevtoolsPanel />,
+              },
+              {
+                name: "React Query",
+                render: <ReactQueryDevtools buttonPosition="bottom-left" />,
               },
             ]}
           />
