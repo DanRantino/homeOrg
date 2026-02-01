@@ -5,11 +5,11 @@ import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import React from "react";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -37,22 +37,23 @@ export const Route = createRootRouteWithContext<{
   }),
 
   shellComponent: RootDocument,
+  notFoundComponent: () => <div>404 - Not Found</div>,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument() {
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           storageKey="dark-theme"
           enableSystem
         >
-          {children}
+          <Outlet />
 
           <TanStackDevtools
             config={{ position: "bottom-left" }}

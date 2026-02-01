@@ -1,13 +1,13 @@
+import { type NotificationType } from "@/types/notifications";
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import { Bell, BellDot } from "lucide-react";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "./drawer";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import { type NotificationType } from "@/types/notifications";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "./drawer";
 
 type NotificationProps = {
   notifications: NotificationType[];
@@ -67,7 +67,7 @@ const Notification: React.FC<NotificationProps> = ({ notifications }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel className="px-4 py-2 font-medium">
-            Notifications
+            {notifications.length === 0 ? "Sem Notificações" : "Notificações"}
           </DropdownMenuLabel>
           {notifications.map((notification, index) => {
             if (index >= 5) return null; // Limit to 5 notifications

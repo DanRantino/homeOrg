@@ -1,120 +1,43 @@
-import { Home } from "lucide-react";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { ModeToggle } from "./mode-toggle";
+import { SearchIcon } from "lucide-react";
 import Notification from "./ui/notification";
 
-import { type NotificationType } from "@/types/notifications";
-import UserAvatar from "./user-avatar";
-
-export const notificationsMock: NotificationType[] = [
-  {
-    id: "1",
-    type: "to do",
-    message: "Revisar contrato do fornecedor",
-  },
-  {
-    id: "2",
-    type: "approved",
-    message: "Pagamento do aluguel aprovado",
-  },
-  {
-    id: "3",
-    type: "delayed",
-    message: "Manutenção do ar-condicionado atrasada",
-  },
-  {
-    id: "4",
-    type: "to do",
-    message: "Comprar ração dos pets",
-  },
-  {
-    id: "5",
-    type: "approved",
-    message: "Conta de luz paga com sucesso",
-  },
-  {
-    id: "6",
-    type: "to do",
-    message: "Agendar consulta veterinária",
-  },
-  {
-    id: "7",
-    type: "delayed",
-    message: "Entrega do botijão de gás",
-  },
-  {
-    id: "8",
-    type: "approved",
-    message: "Orçamento da reforma aprovado",
-  },
-  {
-    id: "9",
-    type: "to do",
-    message: "Trocar filtro de água",
-  },
-  {
-    id: "10",
-    type: "delayed",
-    message: "Pagamento do condomínio pendente",
-  },
-  {
-    id: "11",
-    type: "approved",
-    message: "Seguro residencial renovado",
-  },
-];
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { pb } from "@/data/pocketbase";
+import { Input } from "./ui/input";
 
 export default function Header() {
   return (
-    <>
-      <header className="p-4 h-16 items-center bg-card text-black shadow-lg sticky top-0 z-50 flex justify-between">
-        <div>
-          <div className="flex items-center space-x-2 h-8">
-            <Select>
-              <SelectTrigger size="sm" className="w-45 h-12 pl-2 font-semibold">
-                <SelectValue placeholder="Home" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="home">
-                  <Home className="mr-2 inline-block font-semibold" />
-                  Home
-                </SelectItem>
-                <SelectItem value="home 2">
-                  <Home className="mr-2 inline-block font-semibold" />
-                  Home 2
-                </SelectItem>
-              </SelectContent>
-            </Select>
+    <div className="border-b px-8 py-4">
+      <header className="sticky top-0 left-0 flex gap-4 items-center bg-background-light dark:bg-background-dark">
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="max-w-md">
+            <Input
+              icon={<SearchIcon size={15} />}
+              size={200}
+              placeholder="Search..."
+            />
           </div>
-          <p className="text-muted-foreground">
-            {
-              notificationsMock.filter(
-                (notification) => notification.type === "to do",
-              ).length
-            }{" "}
-            tarefas pendentes hoje
-          </p>
+          <div className="flex items-center justify-center pt-2">
+            <Notification notifications={[]} />
+          </div>
         </div>
-        <div className="flex space-x-4 justify-center items-center">
-          <Notification notifications={notificationsMock} />
-          <ModeToggle />
-          <UserAvatar
-            user={{
-              email: "danielsmith30@gmail.com",
-              id: "1",
-              name: "Daniel Fürst",
-              avatarUrl: "",
-            }}
-            fallback="NT"
-          />
+        <div className="h-8 w-px bg-accent mx-1"></div>
+        <div className="flex items-center justify-center gap-4">
+          <div className="flex flex-col">
+            <span className="text-lg">{pb.authStore.record?.name}</span>
+            <span className="text-sm font-light text-right">Admin</span>
+          </div>
+          <Avatar>
+            <AvatarImage
+              src={
+                "http://127.0.0.1:8090/api/files/_pb_users_auth_/npr96cyh1nc96kc/" +
+                pb.authStore.record?.avatar
+              }
+              alt={pb.authStore.record?.name}
+            />
+          </Avatar>
         </div>
       </header>
-    </>
+    </div>
   );
 }

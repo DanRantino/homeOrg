@@ -1,143 +1,71 @@
 import { pb } from "@/data/pocketbase";
 import type { RecordModel } from "pocketbase";
-import { create } from "zustand";
-import type { PersistStorage } from "zustand/middleware";
-import { persist } from "zustand/middleware";
+import { useSyncExternalStore } from "react";
 
 export interface AuthState {
   isAuthenticated: boolean;
   user: RecordModel | null;
   token: string | null;
-  otpId: string | null;
-  setAuth: (auth: Partial<AuthState>) => void;
-  syncFromPocketbase: () => void;
-  requestOTP: (email: string) => Promise<string>;
-  login: (email: string, password: string) => Promise<void>;
-  loginWithOTP: (
-    email: string,
-    otpId: string,
-    password: string,
-  ) => Promise<void>;
-  logout: () => Promise<void>;
-  clearAuth: () => void;
 }
 
-const key = "pocketbase_auth";
+const getSnapshot = (): AuthState => ({
+  isAuthenticated: pb.authStore.isValid,
+  user: pb.authStore.record,
+  token: pb.authStore.token,
+});
 
-// Custom storage that works on both server and client
-const createStorage = (): PersistStorage<AuthState> => {
-  if (typeof window === "undefined") {
-    // Server-side: use memory storage (no-op)
-    return {
-      getItem: () => null,
-      setItem: () => {},
-      removeItem: () => {},
-    };
-  }
-  // Client-side: use localStorage
-  return {
-    getItem: (name) => {
-      const value = localStorage.getItem(name);
-      return value ? JSON.parse(value) : null;
-    },
-    setItem: (name, value) => localStorage.setItem(name, JSON.stringify(value)),
-    removeItem: (name) => localStorage.removeItem(name),
+const getServerSnapshot = (): AuthState => ({
+  isAuthenticated: false,
+  user: null,
+  token: null,
+});
+
+const subscribe = (callback: () => void) => {
+  const unsubscribe = pb.authStore.onChange(() => callback(), true);
+  return () => {
+    if (typeof unsubscribe === "function") unsubscribe();
   };
 };
 
-function getAuthFromPocketbase(): Partial<AuthState> {
-  return {
-    isAuthenticated: pb.authStore.isValid,
-    user: pb.authStore.model,
-    token: pb.authStore.token,
-  };
+let initializePromise: Promise<void> | null = null;
+
+export async function initializeAuth() {
+  if (!initializePromise) {
+    initializePromise = (async () => {
+      if (pb.authStore.isValid) {
+        try {
+          await pb.collection("users").authRefresh();
+        } catch {
+          pb.authStore.clear();
+        }
+      }
+    })();
+  }
+
+  return initializePromise;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      isAuthenticated: false,
-      user: null,
-      token: null,
-      otpId: null,
-      setAuth: (auth) => set(auth),
-      syncFromPocketbase: () => {
-        const authData = getAuthFromPocketbase();
-        set(authData);
-      },
-      requestOTP: async (email: string) => {
-        const response = await pb.collection("users").requestOTP(email);
-        set({ otpId: response.otpId });
-        return response.otpId;
-      },
-      login: async (email: string, password: string) => {
-        try {
-          const authData = await pb
-            .collection("users")
-            .authWithPassword(email, password);
-          set({
-            isAuthenticated: true,
-            user: authData.record,
-            token: authData.token,
-          });
-        } catch (error) {
-          set({
-            isAuthenticated: false,
-            user: null,
-            token: null,
-          });
-          throw error;
-        }
-      },
-      loginWithOTP: async (otpId: string, password: string) => {
-        try {
-          const authData = await pb
-            .collection("users")
-            .authWithOTP(otpId, password);
-          set({
-            isAuthenticated: true,
-            user: authData.record,
-            token: authData.token,
-          });
-        } catch (error) {
-          set({
-            isAuthenticated: false,
-            user: null,
-            token: null,
-          });
-          throw error;
-        }
-      },
-      logout: async () => {
-        pb.authStore.clear();
-        set({
-          isAuthenticated: false,
-          user: null,
-          token: null,
-          otpId: null,
-        });
-      },
-      clearAuth: () => {
-        set({
-          isAuthenticated: false,
-          user: null,
-          token: null,
-          otpId: null,
-        });
-      },
-    }),
-    {
-      name: key,
-      storage: createStorage(),
-      onRehydrateStorage: () => {
-        return (state, error) => {
-          if (error) console.error("Failed to rehydrate auth store", error);
-          // Sync with pocketbase after rehydration
-          if (state) {
-            state.syncFromPocketbase();
-          }
-        };
-      },
-    },
-  ),
-);
+export function getAuthSnapshot() {
+  return getSnapshot();
+}
+
+export function useAuth() {
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
+export async function requestOTP(email: string) {
+  const response = await pb.collection("users").requestOTP(email);
+  return response.otpId;
+}
+
+export async function login(email: string, password: string) {
+  await pb.collection("users").authWithPassword(email, password);
+}
+
+export async function loginWithOTP(otpId: string, password: string) {
+  await pb.collection("users").authWithOTP(otpId, password);
+}
+
+export async function logout() {
+  pb.authStore.clear();
+}

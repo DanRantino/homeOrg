@@ -4,117 +4,111 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ======================================================
-   DOMUS — SHADCN DESIGN SYSTEM
+   DOMUS — DESIGN SYSTEM
    Tailwind CSS v4.1 • CSS-first
-   Light + Dark Theme
+   Calm, SaaS-grade, production-ready
    ====================================================== */
 
 /* ======================================================
-   LIGHT THEME (DEFAULT)
+   LIGHT THEME (fallback / optional)
    ====================================================== */
 :root {
   /* Core surfaces */
   --background: 0 0% 100%;
-  --foreground: 222.2 47.4% 11.2%;
+  --foreground: 222 47% 11%;
+
+  --surface: 0 0% 98%;
+  --surface-foreground: 222 47% 11%;
 
   --card: 0 0% 100%;
-  --card-foreground: 222.2 47.4% 11.2%;
+  --card-foreground: 222 47% 11%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 47.4% 11.2%;
+  --popover-foreground: 222 47% 11%;
 
   /* Brand */
-  --primary: 221.2 83.2% 53.3%;
+  --primary: 221 83% 53%;
   --primary-foreground: 210 40% 98%;
 
   /* Secondary */
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
 
   /* Muted */
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
 
   /* Accent */
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
 
   /* Semantic */
-  --destructive: 0 84.2% 60.2%;
+  --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
 
-  /* Borders / inputs / focus */
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
+  /* Borders / focus */
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 221 83% 53%;
 
   /* Radius */
+  --radius-sm: 0.375rem;
   --radius: 0.5rem;
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --radius-lg: 0.75rem;
 }
 
 /* ======================================================
-   DARK THEME
+   DARK THEME — DOMUS DEFAULT
    ====================================================== */
 .dark {
-  /* Core surfaces */
-  --background: 222.2 47.4% 11.2%;
+  /* Core */
+  --background: 222 47% 11%;
   --foreground: 210 40% 98%;
 
-  --card: 222.2 47.4% 13%;
+  --surface: 222 30% 13%;
+  --surface-foreground: 210 40% 98%;
+
+  --card: 222 47% 15%;
   --card-foreground: 210 40% 98%;
 
-  --popover: 222.2 47.4% 13%;
+  --popover: 222 47% 15%;
   --popover-foreground: 210 40% 98%;
 
-  /* Brand (slightly brighter for contrast) */
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
+  /* Brand */
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 47% 11%;
 
   /* Secondary */
-  --secondary: 217.2 32.6% 17.5%;
+  --secondary: 217 33% 18%;
   --secondary-foreground: 210 40% 98%;
 
   /* Muted */
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted: 217 33% 18%;
+  --muted-foreground: 215 20% 65%;
 
   /* Accent */
-  --accent: 217.2 32.6% 17.5%;
+  --accent: 217 33% 18%;
   --accent-foreground: 210 40% 98%;
 
   /* Semantic */
-  --destructive: 0 62.8% 30.6%;
+  --destructive: 0 63% 31%;
   --destructive-foreground: 210 40% 98%;
 
-  /* Borders / inputs / focus */
-  --border: 217.2 32.6% 20%;
-  --input: 217.2 32.6% 20%;
-  --ring: 224.3 76.3% 48%;
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  /* Borders / focus */
+  --border: 217 33% 22%;
+  --input: 217 33% 22%;
+  --ring: 224 76% 48%;
 }
 
 /* ======================================================
    TAILWIND THEME EXPORT (v4)
    ====================================================== */
 @theme {
-  --normal-bg: hsl(var(--color-card-foreground));
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
+
+  --color-surface: hsl(var(--surface));
+  --color-surface-foreground: hsl(var(--surface-foreground));
 
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
@@ -141,43 +135,81 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
 
+  --radius-sm: var(--radius-sm);
   --radius: var(--radius);
+  --radius-lg: var(--radius-lg);
 }
 
 /* ======================================================
-   BASE STYLES
+   BASE ELEMENT STYLES
    ====================================================== */
-* {
-  border-color: hsl(var(--border));
-}
-
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-html,
-body {
-  width: 100%;
-  min-height: 100%;
-}
-
-@theme inline {
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html,
   body {
-    @apply bg-background text-foreground;
+    width: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+  }
+}
+
+/* ======================================================
+   SURFACES & GLASS (DOMUS-SPECIFIC)
+   ====================================================== */
+@layer utilities {
+  .surface {
+    @apply bg-surface text-surface-foreground;
+  }
+
+  .surface-card {
+    @apply bg-card text-card-foreground rounded-lg;
+  }
+
+  .glass {
+    background-color: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(14px);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .glass-muted {
+    background-color: hsl(var(--surface) / 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+}
+
+/* ======================================================
+   MOTION (SUBTLE, PURPOSEFUL)
+   ====================================================== */
+@layer utilities {
+  .motion-fast {
+    transition: all 120ms ease-out;
+  }
+
+  .motion {
+    transition: all 180ms ease-out;
+  }
+
+  .motion-slow {
+    transition: all 260ms ease-out;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    background-color: hsl(var(--surface) / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--primary) / 0.2);
   }
 }

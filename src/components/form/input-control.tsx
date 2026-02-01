@@ -1,11 +1,20 @@
 interface InputControlProps extends React.PropsWithChildren {
   label?: string;
   error: string | null;
+  rightTopLabel?: string | React.ReactNode;
 }
-const InputControl = ({ label, error, children }: InputControlProps) => {
+const InputControl = ({
+  label,
+  error,
+  children,
+  rightTopLabel,
+}: InputControlProps) => {
   return (
-    <div className="py-4">
-      {label && <label>{label}</label>}
+    <div className="py-2">
+      <div className="flex justify-between">
+        {label && <label>{label}</label>}
+        {rightTopLabel && <label>{rightTopLabel}</label>}
+      </div>
       {children}
       <div className="h-4">
         {error && <span className="text-destructive">{error}</span>}
