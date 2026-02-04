@@ -6,13 +6,14 @@ import {
   LayoutDashboard,
   Settings,
 } from "lucide-react";
+import logo from "/logo.svg";
 
 export const Navbar = () => {
   return (
     <aside className="w-64 shrink-0 border-r h-screen border-[#242d47] bg-background-light dark:bg-background-dark flex flex-col p-4 ">
       <div className="flex pb-4">
         <div className="size-14">
-          <img src="/public/logo.svg" />
+          <img src={logo} />
         </div>
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Domus</h1>

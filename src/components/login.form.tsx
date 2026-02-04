@@ -48,7 +48,7 @@ export const LoginForm = () => {
   });
 
   return (
-    <Card className="glass-effect w-full max-w-110 rounded-xl p-8 shadow-2xl relative z-10 bg-amber-600">
+    <Card className="glass-effect w-full max-w-110 rounded-xl p-8 shadow-2xl relative z-10 ">
       <form
         onSubmit={async (e) => {
           e.preventDefault();

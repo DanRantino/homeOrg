@@ -61,43 +61,37 @@
    DARK THEME — DOMUS DEFAULT
    ====================================================== */
 .dark {
-  /* Core */
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
+  --background: 225 34% 10%;
+  --foreground: 0 0% 100%;
 
-  --surface: 222 30% 13%;
-  --surface-foreground: 210 40% 98%;
+  --card: 225 28% 14%;
+  --card-foreground: 0 0% 100%;
 
-  --card: 222 47% 15%;
-  --card-foreground: 210 40% 98%;
+  --popover: 225 28% 14%;
+  --popover-foreground: 0 0% 100%;
 
-  --popover: 222 47% 15%;
-  --popover-foreground: 210 40% 98%;
+  --primary: 225 80% 50%;
+  --primary-foreground: 0 0% 100%;
 
-  /* Brand */
-  --primary: 217 91% 60%;
-  --primary-foreground: 222 47% 11%;
+  --secondary: 225 25% 22%;
+  --secondary-foreground: 0 0% 100%;
 
-  /* Secondary */
-  --secondary: 217 33% 18%;
-  --secondary-foreground: 210 40% 98%;
+  --muted: 225 25% 22%;
+  --muted-foreground: 225 35% 70%;
 
-  /* Muted */
-  --muted: 217 33% 18%;
-  --muted-foreground: 215 20% 65%;
-
-  /* Accent */
-  --accent: 217 33% 18%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 225 30% 18%;
+  --accent-foreground: 0 0% 100%;
 
   /* Semantic */
   --destructive: 0 63% 31%;
   --destructive-foreground: 210 40% 98%;
 
   /* Borders / focus */
-  --border: 217 33% 22%;
-  --input: 217 33% 22%;
-  --ring: 224 76% 48%;
+  --border: 225 30% 30%;
+  --input: 225 30% 30%;
+  --ring: 225 80% 50%;
+
+  --radius: 0.75rem;
 }
 
 /* ======================================================
@@ -167,15 +161,7 @@
    SURFACES & GLASS (DOMUS-SPECIFIC)
    ====================================================== */
 @layer utilities {
-  .surface {
-    @apply bg-surface text-surface-foreground;
-  }
-
-  .surface-card {
-    @apply bg-card text-card-foreground rounded-lg;
-  }
-
-  .glass {
+  /* .glass {
     background-color: hsl(var(--card) / 0.6);
     backdrop-filter: blur(14px);
     border: 1px solid hsl(var(--border) / 0.6);
@@ -185,7 +171,7 @@
     background-color: hsl(var(--surface) / 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid hsl(var(--border) / 0.5);
-  }
+  } */
 }
 
 /* ======================================================
@@ -206,10 +192,10 @@
 }
 
 @layer utilities {
-  .glass-effect {
-    background-color: hsl(var(--surface) / 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--primary) / 0.2);
+  .rounded-lg {
+    border-radius: var(--radius);
+  }
+  .rounded-xl {
+    border-radius: calc(var(--radius) + 0.25rem);
   }
 }

@@ -1,5 +1,5 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { BadgeAlert } from "lucide-react";
 
 type MetricCardsProps = {
   title: string;
@@ -10,15 +10,15 @@ type MetricCardsProps = {
 const MetricCards = ({ amount, title, to }: MetricCardsProps) => {
   return (
     <Link {...to}>
-      <Card className="flex-1 min-w-45 max-w-62.5 hover:bg-accent-foreground/20">
-        <CardHeader className="p-2">
-          <CardTitle className="text-center text-sm">{title}</CardTitle>
-        </CardHeader>
-
-        <CardDescription className="text-3xl font-bold text-destructive text-center">
-          {amount}
-        </CardDescription>
-      </Card>
+      <div className="bg-card rounded-xl border flex p-6 items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <p className=" text-sm font-medium">{title}</p>
+          <p className="text-3xl font-bold">{amount}</p>
+        </div>
+        <div className="p-3 bg-primary/20 rounded-lg text-primary">
+          <BadgeAlert size={30} />
+        </div>
+      </div>
     </Link>
   );
 };
