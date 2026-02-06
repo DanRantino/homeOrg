@@ -6,11 +6,12 @@ import {
   LayoutDashboard,
   Settings,
 } from "lucide-react";
+import { HouseholdSelect } from "./HouseholdSelect";
 import logo from "/logo.svg";
 
 export const Navbar = () => {
   return (
-    <aside className="w-64 shrink-0 border-r h-screen border-[#242d47] bg-background-light dark:bg-background-dark flex flex-col p-4 ">
+    <aside className="relative w-64 shrink-0 border-r h-screen border-[#242d47] bg-background-light dark:bg-background-dark flex flex-col p-4 ">
       <div className="flex pb-4">
         <div className="size-14">
           <img src={logo} />
@@ -19,6 +20,9 @@ export const Navbar = () => {
           <h1 className="text-2xl font-bold">Domus</h1>
           <h2 className="text-sm text-gray-500">Household Mgmt</h2>
         </div>
+      </div>
+      <div className="mb-6 z-50 pointer-events-auto w-56">
+        <HouseholdSelect />
       </div>
       <nav className="flex flex-col gap-4">
         <Link

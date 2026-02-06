@@ -51,7 +51,7 @@ function RootDocument() {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+      <body className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display pointer-events-auto">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

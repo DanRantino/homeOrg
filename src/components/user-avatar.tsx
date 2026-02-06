@@ -1,5 +1,10 @@
+import { pb } from "@/data/pocketbase";
+import { type UserType } from "@/types/user";
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
+import { useNavigate } from "@tanstack/react-router";
+import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -7,17 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { User } from "lucide-react";
-import { type UserType } from "@/types/user";
-import { Button } from "./ui/button";
-import { pb } from "@/data/pocketbase";
-import { useNavigate } from "@tanstack/react-router";
 
 function UserAvatar({ fallback, user }: { fallback?: string; user: UserType }) {
   const navigate = useNavigate();
   return (
     <div className="pr-4">
-      <DropdownMenu>
+      <DropdownMenu open={false}>
         <DropdownMenuTrigger>
           <Avatar className="rounded-lg">
             <AvatarImage src={user.avatarUrl} alt="User Avatar" />
