@@ -62,10 +62,13 @@ export const HouseholdSelect = () => {
               <House className="size-4 mr-2" />
               <div className="flex flex-col justify-center items-center max-w-52 w-52">
                 {h.name}
-                {Cookies.get("household") === h.id && (
+
+                {Cookies.get("household") === h.id ? (
                   <span className="text-xs ml-2 text-blue-600">
                     (Selecionada)
                   </span>
+                ) : (
+                  <p className="text-xs ml-2 text-cyan-500">{h.role}</p>
                 )}
               </div>
             </DropdownMenuItem>
